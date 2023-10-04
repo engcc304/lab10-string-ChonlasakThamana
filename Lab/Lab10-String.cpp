@@ -28,10 +28,47 @@
 */
 
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+// ฟังก์ชันสำหรับตรวจสอบว่าคำนั้นสามารถอ่านจากหน้าไปหลังหรือหลังไปหน้าได้หรือไม่
+int isPalindrome(char *word) {
+    int left = 0;
+    int right = strlen(word) - 1;
+
+    while (left < right) {
+        // ไม่สนใจตัวอักษรที่ไม่ใช่ตัวอักษรตัวพิมพ์ใหญ่หรือตัวเล็ก
+        while (!isalpha(word[left]) && left < right) {
+            left++;
+        }
+        while (!isalpha(word[right]) && left < right) {
+            right--;
+        }
+
+        // เปรียบเทียบตัวอักษรที่อ่านจากหน้าไปหลัง
+        if (tolower(word[left]) != tolower(word[right])) {
+            return 0; // ไม่ Pass
+        }
+
+        left++;
+        right--;
+    }
+
+    return 1; // Pass
+}
 
 int main() {
+    char word[100];
 
-    //--| YOUR CODE HERE
+    printf("Enter word: ");
+    scanf("%s", word);
 
-    return 0 ;
-}//end main function
+    if (isPalindrome(word)) {
+        printf("Pass.\n");
+    } else {
+        printf("Not Pass.\n");
+    }
+
+    return 0;
+}
+//end main function
